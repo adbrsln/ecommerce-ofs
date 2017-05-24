@@ -20,10 +20,14 @@
 
     <!-- footer CSS -->
     <link href="../css/stickyfooter.css" rel="stylesheet">
-    
+
     <link href="../css/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    
-   
+    <script src="../js/sweetalert.min.js"></script>
+    <link rel="stylesheet" href="../css/sweetalert.css">
+
+        <link href="../include/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet">
+        <link href="../include/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -44,7 +48,7 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav ">
 .                   <li>
-                        <a href="set.php">Settings</a>
+                        <a href="set.php">Profile Settings</a>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">

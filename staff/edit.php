@@ -1,20 +1,22 @@
- <?php 
+ <?php
 include 'include/check.php';
 include '../include/db.php';
 $transid = $_GET["id"];
 if (isset($_GET["id"])) {
-   
-   $query3="SELECT distinct corder.imglink as imglink,corder.status as status, details.name as name,details.address as address , details.notel as notel FROM corder join details on corder.user_id = details.num WHERE corder.transactionid = '$transid'"; //index details
+
+   $query3="SELECT distinct corder.imglink as imglink,corder.status as status, details.name as name,details.address as address , details.notel as notel FROM corder
+   join details on corder.user_id = details.num WHERE corder.transactionid = '$transid'"; //index details
 	$result3 =mysqli_query($connect,$query3);
 	$count = mysqli_num_rows($result3);
 
-			
+
 	if ($count > 0){
-		$query="SELECT corder.item_id, corder.qty as qty  , corder.total as subtotal, corder.ftotal as total, item.itemName as itemname,item.num FROM corder join item on corder.item_id = item.num WHERE transactionid = '$transid'";
-		$result=mysqli_query($connect,$query); 
+		$query="SELECT corder.item_id, corder.qty as qty  , corder.total as subtotal, corder.ftotal as total, item.itemName as itemname,item.num FROM corder
+    join item on corder.item_id = item.num WHERE transactionid = '$transid'";
+		$result=mysqli_query($connect,$query);
 
 		$query2="SELECT DISTINCT num,ftotal,status FROM corder WHERE transactionid = '$transid'";
-		$result2=mysqli_query($connect,$query2); 
+		$result2=mysqli_query($connect,$query2);
 		while($row3 = mysqli_fetch_assoc($result2)){
 			$ftotal = $row3['ftotal'];
 			$status = $row3['status'];
@@ -36,11 +38,11 @@ if (isset($_GET["id"])) {
 
 	}
 		else {
-			 echo '<script>window.location = "/projekweb/customer/index.php?e=f";</script>'; 
+			 echo '<script>window.location = "./customer/index.php?s=f";</script>';
 		}
-	
+
 }
-	
+
 ?>
   <!-- Header Content -->
    <?php include "include/header.php"; ?>
@@ -54,18 +56,18 @@ if (isset($_GET["id"])) {
                             Update Transaction <small>Details</small>
                             <div class="pull-right">Order ID: OFS<?php echo $orderid;?></div>
                         </h1>
-                        
+
                     </div>
                 </div>
         <div class="row">
             <div class="col-lg-12">
                     <form method = "POST" action ="index.php">
-                    
+
                     <table class = "table">
-                          
+
                         <tr>
 
-                            <?php while($row2 = mysqli_fetch_assoc($result3)){  
+                            <?php while($row2 = mysqli_fetch_assoc($result3)){
                             ?>
                             <td class = "col-md-6">
                             <Strong>Customer Order Information</Strong></br></br>
@@ -76,11 +78,11 @@ if (isset($_GET["id"])) {
                                 </td></div>
 
                                 <td class = "col-md-2" colspan="">
-                                
+
                                 </td>
                                 <td class = "col-md-2" colspan="1">
-                                
-                                </td>  
+
+                                </td>
                                 <td class = "col-md-2" colspan="1">
                                 <button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#myModal">Proof Of Payment</button>
                                 </td>
@@ -94,7 +96,7 @@ if (isset($_GET["id"])) {
                             <th>Price per unit</th>
                             <th>Price</th>
                         </tr>
-                        <?php while($row2 = mysqli_fetch_assoc($result)){  
+                        <?php while($row2 = mysqli_fetch_assoc($result)){
                             $ppunit = $row2['subtotal']/$row2['qty'];
                             ?>
                         <tr>
@@ -104,7 +106,7 @@ if (isset($_GET["id"])) {
                             <td><?php echo $row2['subtotal']; ?></td>
 
                         </tr>
-                        <?php  }  ?> 
+                        <?php  }  ?>
                         </hr>
                         <tr>
 
@@ -120,7 +122,7 @@ if (isset($_GET["id"])) {
                          <td></td>
                     </tr>
                     </table>
-                    
+
                 <hr>
                 <div class="pull-right">
                     <a   class = "<?php echo $paramstatus;?>"  href="status.php?id=<?=$transid;?>&type=Approve">Approve Order</a>
@@ -143,11 +145,11 @@ if (isset($_GET["id"])) {
                               <div class="thumbnail">
                                    <?php if($img != ''){ $param = '../customer/uploads/'.$img;}else $param =''; ?>
                                 <img  src="<?php echo $param; ?>" alt="" width ="800" height ="500">
-                                 
+
                                 </div>
                             </div>
                             <div class="modal-footer">
-                              
+
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                 </form>
                             </div>
@@ -158,4 +160,3 @@ if (isset($_GET["id"])) {
 </div>
     <!-- /.footer -->
     <?php include "include/footer.php"; ?>
-

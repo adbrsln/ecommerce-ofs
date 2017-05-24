@@ -3,7 +3,7 @@
            $s = $_GET['s'];
          switch ($s){
             case 't':
-            echo  '<script type="text/javascript" language="javascript"> 
+            echo  '<script type="text/javascript" language="javascript">
             swal("Succesful", "Successs Adding to Cart", "success");</script>';
             break;
             case 'f':
@@ -25,14 +25,18 @@
             case 'sf':
             echo  '<script type="text/javascript" language="javascript"> swal("Failed", "You have no Access! Login First!", "error");
             </script>';
+            case 'sfc':
+            echo  '<script type="text/javascript" language="javascript"> swal("Failed", "Your cart is empty ! You will be redirected to shopping page", "error");
+            </script>';
+            break;
             case 'p':
             echo  '<script type="text/javascript" language="javascript"> swal("Succesful", "You have Successfully delete the record!", "success");
             </script>';
             break;
-        default:  
+        default:
             }
        }?>
- 
+
 <div class="container">
 
         <hr>
@@ -54,6 +58,45 @@
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
+
+    <script>
+     $('#confirm').click(function(e) {
+     e.preventDefault(); // Prevent the href from redirecting directly
+     var linkURL = $(this).attr("href");
+     warnBeforeRedirect(linkURL);
+     });
+
+      function warnBeforeRedirect(linkURL) {
+         swal({
+           title: "Do you want to place order?",
+           text: "Of course you want right? hop on!",
+           type: "success",
+           showCancelButton: true
+         }, function() {
+           // Redirect the user
+           window.location.href = linkURL;
+         });
+       }
+    </script>
+    <script>
+     $('#confirmationdel').click(function(e) {
+     e.preventDefault(); // Prevent the href from redirecting directly
+     var linkURL = $(this).attr("href");
+     warnBeforeRedirect2(linkURL);
+     });
+
+      function warnBeforeRedirect2(linkURL) {
+         swal({
+           title: "Clear Shopping Cart?",
+           text: "Caution! You cannot reverse this!",
+           type: "warning",
+           showCancelButton: true
+         }, function() {
+           // Redirect the user
+           window.location.href = linkURL;
+         });
+       }
+    </script>
 </body>
 
 </html>

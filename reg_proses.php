@@ -7,8 +7,9 @@ $n = ucwords(strtolower($_POST['nama']));
 $u = strtolower($_POST['user']);
 $p = $_POST['pass'];
 $l = $_POST['level'];
-
-
+$e = $_POST['email'];
+$add = $_POST['add'];
+$notel = $_POST['notel'];
 
 
 
@@ -17,11 +18,11 @@ $result=mysqli_query($connect,$query);
 $num=mysqli_num_rows($result);
 
 if($num != 0)
-{ 
+{
 		echo "this username has been taken! try again!";
-		echo '<script>window.history.go(-1);</script>'; 
-		
-		
+		echo '<script>window.history.go(-1);</script>';
+
+
 }
 else
 		{
@@ -35,11 +36,11 @@ else
 		while($row2 = mysqli_fetch_assoc($result3)){
 			$id = $row2['num'];
 		}
-		$query = "INSERT INTO details (loginID,name) VALUES ('$id','$n')";
+		$query = "INSERT INTO details (loginID,name,email,address,notel) VALUES ('$id','$n','$e','$add','$notel')";
 		mysqli_query($connect,$query) or die ("Error Query [".$strSQL."]");
 		$query = "FLUSH PRIVILEGES";
-		
-		echo '<meta http-equiv="refresh" content="0;url=main.php?s=llt">'; 
+
+		echo '<meta http-equiv="refresh" content="0;url=main.php?s=llt">';
 
 		}
 

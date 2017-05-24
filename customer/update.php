@@ -1,9 +1,9 @@
-     <?php 
+     <?php
      include 'include/check.php';
     include '../include/db.php';
 
     $num = $_SESSION['cnum'];
-    $sql = "SELECT * from details where loginID = '$num'";
+    $sql = "SELECT * from details where num = '$num'";
     $result = mysqli_query($connect,$sql);
     ?>
   <!-- Header Content -->
@@ -27,7 +27,7 @@
                    <input class="form-control"  type="notel" name = "notel" value = "<?=$row2['notel']; ?>" required>
                      </br>
 
-                <input type="hidden" name = "id" value = "<?=$num?>">		
+                <input type="hidden" name = "id" value = "<?=$num?>">
 
                 <?php  }  ?>
                      <input type ="submit"  class  = "btn btn-primary" name = "submit" id ="submit" value="Submit">
@@ -37,4 +37,3 @@
     </div>
     <!-- /.footer -->
     <?php include "include/footer.php"; ?>
-

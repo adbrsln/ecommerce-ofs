@@ -1,33 +1,45 @@
- <?php 
+ <?php
 include 'include/check.php';
 include '../include/db.php';
 $transid = $_GET["id"];
 if (isset($_GET["id"])) {
-   
-   $query3="SELECT distinct corder.imglink as imglink,corder.status as status, details.name as name,details.address as address , details.notel as notel FROM corder join details on corder.user_id = details.num WHERE corder.transactionid = '$transid'"; //index details
+  if (isset($_GET['billplz']['id'])){
+    $billid = $_GET['billplz']['id'];
+
+    $sql4 = "Update corder set billID = '$billid' ,status = '4' where transactionid = '$transid'";
+    mysqli_query($connect,$sql4);
+  }
+   $query3="SELECT distinct corder.imglink as imglink,corder.status as status, details.name as name,details.address as address , details.notel as notel FROM corder
+   join details on corder.user_id = details.num
+   WHERE corder.transactionid = '$transid'"; //index details
 	$result3 =mysqli_query($connect,$query3);
 	$count = mysqli_num_rows($result3);
 
-			
+
 	if ($count > 0){
-		$query="SELECT corder.item_id, corder.qty as qty  , corder.total as subtotal, corder.ftotal as total, item.itemName as itemname,item.num FROM corder join item on corder.item_id = item.num WHERE transactionid = '$transid'";
-		$result=mysqli_query($connect,$query); 
+		$query="SELECT corder.item_id, corder.qty as qty  , corder.total as subtotal, corder.ftotal as total, item.itemName as itemname,item.num FROM corder
+    join item on corder.item_id = item.num
+    WHERE transactionid = '$transid'";
+		$result=mysqli_query($connect,$query);
 
 		$query2="SELECT DISTINCT num,ftotal,status FROM corder WHERE transactionid = '$transid'";
-		$result2=mysqli_query($connect,$query2); 
+		$result2=mysqli_query($connect,$query2);
 		while($row3 = mysqli_fetch_assoc($result2)){
 			$ftotal = $row3['ftotal'];
 			$status = $row3['status'];
             $orderid = $row3['num'];
-            if ($status == 'Complete'){
+            if ($status == '2'){
                 $paramstatus ="btn btn-primary disabled";
                 $paramstatus3 ="btn btn-danger disabled";
-            }else if ($status == 'Waiting Confirmation') {
+            }else if ($status == '3') {
+                $paramstatus3 ="btn btn-danger disabled";
+                $paramstatus ="btn btn-primary disabled";
+                $paramstatus4 ="btn btn-success";
+                $paramstatus3 ="btn btn-danger ";
+              }else if ($status == '4') {
                 $paramstatus ="btn btn-primary disabled ";
                 $paramstatus3 ="btn btn-danger ";
-            }else if ($status == 'Payment Made') {
-                $paramstatus ="btn btn-primary disabled ";
-                $paramstatus3 ="btn btn-danger ";
+                $paramstatus4 ="btn btn-success disabled ";
             }else {
                  $paramstatus ="btn btn-primary ";
                 $paramstatus3 ="btn btn-danger ";
@@ -36,11 +48,11 @@ if (isset($_GET["id"])) {
 
 	}
 		else {
-			 echo '<script>window.location = "/projekweb/customer/index.php?e=f";</script>'; 
+			 echo '<script>window.location = "/projekweb/customer/index.php?e=f";</script>';
 		}
-	
+
 }
-	
+
 ?>
   <!-- Header Content -->
    <?php include "include/header.php"; ?>
@@ -54,18 +66,18 @@ if (isset($_GET["id"])) {
                             Update Transaction <small>Details</small>
                             <div class="pull-right">Order ID: OFS<?php echo $orderid;?></div>
                         </h1>
-                        
+
                     </div>
                 </div>
         <div class="row">
             <div class="col-lg-12">
-                    <form method = "POST" action ="index.php">
-                    
+                    <form method = "POST" action ="bproses.php">
+
                     <table class = "table">
-                          
+
                         <tr>
 
-                            <?php while($row2 = mysqli_fetch_assoc($result3)){  
+                            <?php while($row2 = mysqli_fetch_assoc($result3)){
                             ?>
                             <td class = "col-md-6">
                             <Strong>Customer Order Information</Strong></br></br>
@@ -77,11 +89,11 @@ if (isset($_GET["id"])) {
                                 </td></div>
 
                                 <td class = "col-md-2" colspan="">
-                                
+
                                 </td>
                                 <td class = "col-md-2" colspan="1">
-                                
-                                </td>  
+
+                                </td>
                                 <td class = "col-md-2" colspan="1">
                                 <button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#myModal">Proof Of Payment</button>
                                 </td>
@@ -95,7 +107,7 @@ if (isset($_GET["id"])) {
                             <th>Price per unit</th>
                             <th>Price</th>
                         </tr>
-                        <?php while($row2 = mysqli_fetch_assoc($result)){  
+                        <?php while($row2 = mysqli_fetch_assoc($result)){
                             $ppunit = $row2['subtotal']/$row2['qty'];
                             ?>
                         <tr>
@@ -105,7 +117,7 @@ if (isset($_GET["id"])) {
                             <td><?php echo $row2['subtotal']; ?></td>
 
                         </tr>
-                        <?php  }  ?> 
+                        <?php  }  ?>
                         </hr>
                         <tr>
 
@@ -121,12 +133,16 @@ if (isset($_GET["id"])) {
                          <td></td>
                     </tr>
                     </table>
-                    
+
                 <hr>
+
                 <div class="pull-right">
+
                     <a   class = "<?php echo $paramstatus;?>"  data-toggle="modal" data-target="#myModal2">Upload Proof of Payment</a>
+                    <a   class = "<?php echo $paramstatus4;?>"  href="bproses.php?id=<?php echo $transid;?>&t=<?= $ftotal?>">Pay with Billplz</a>
                     <a  onclick = "return del();" class = "<?php echo $paramstatus3;?>" href="status.php?id=<?=$transid;?>&type=cancel" >Cancel Order</a>
                 </div>
+
                  </form>
                 </div>
         </div>
@@ -143,11 +159,11 @@ if (isset($_GET["id"])) {
                               <div class="thumbnail">
                                    <?php if($img != ''){ $param = '../customer/uploads/'.$img;}else $param =''; ?>
                                 <img  src="<?php echo $param; ?>" alt="" width ="800" height ="500">
-                                 
+
                                 </div>
                             </div>
                             <div class="modal-footer">
-                              
+
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                 </form>
                             </div>
@@ -166,12 +182,12 @@ if (isset($_GET["id"])) {
                       <h4 class="modal-title">Upload image Proof of Payment</h4>
                     </div>
                     <div class="modal-body">
-                      
+
                         <form action="upload.php" method="post" enctype="multipart/form-data">
                             <p>Only upload an image with the <strong>PNG size or JPG only</strong></p>
                             <p>Select image to upload:</p>
                         <input type="file" name="fileToUpload"  id="fileToUpload">
-                        
+
                         <input type ="hidden" name ="id" value = "<?= $transid; ?>">
                         </div>
                     <div class="modal-footer">
@@ -186,4 +202,3 @@ if (isset($_GET["id"])) {
 </div>
     <!-- /.footer -->
     <?php include "include/footer.php"; ?>
-

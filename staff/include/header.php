@@ -20,10 +20,13 @@
 
     <!-- footer CSS -->
     <link href="../css/stickyfooter.css" rel="stylesheet">
-    
+
     <link href="../css/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
      <script src="../js/sweetalert.min.js"></script>
     <link rel="stylesheet" href="../css/sweetalert.css">
+
+            <link href="../include/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet">
+            <link href="../include/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
     <script>
 		function del(){
 		var r = confirm("Are you sure to delete this record?");
@@ -57,7 +60,7 @@
                     <li> <a href="../staff/cat.php">Category Management</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    
+
                    <li>
                     <a href="/shop/logout.php"><i class="fa fa-fw fa-power-off">&nbsp;</i>Logout</a>
                     </li>

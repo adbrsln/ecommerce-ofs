@@ -13,37 +13,37 @@ $n1 = $_POST['num'];
 
 
 
-$query="SELECT * FROM login WHERE num = '$n1'";
+$query="SELECT * FROM details WHERE num = '$n1'";
 $result=mysqli_query($connect,$query);
 $num=mysqli_num_rows($result);
 
 if($n1 != 0)
-{ 
+{
 		if ($p != ''){
 
 		$encrypted_mypassword = md5($p);
-		$query = "UPDATE login set username = '$u' , password = '$encrypted_mypassword' , level = '$l' where num = $n1";
+		$query = "UPDATE details set username = '$u' , password = '$encrypted_mypassword' , level = '$l' where num = $n1";
 		mysqli_query($connect,$query) or die ("Error Query [".$strSQL."]");
 		$query = "FLUSH PRIVILEGES";
-		echo '<meta http-equiv="refresh" content="0;url=./index.php?s=u">'; 
-		
+		echo '<meta http-equiv="refresh" content="0;url=./index.php?s=u">';
+
 		}else{
-			$query = "UPDATE login set username = '$u' , level = '$l' where num = $n1";
+			$query = "UPDATE details set username = '$u' , level = '$l' where num = $n1";
 		mysqli_query($connect,$query) or die ("Error Query [".$strSQL."]");
 		$query = "FLUSH PRIVILEGES";
-		echo '<meta http-equiv="refresh" content="0;url=./index.php?s=t">'; 
-		
+		echo '<meta http-equiv="refresh" content="0;url=./index.php?s=tu">';
+
 		}
-		
+
 }
 else
 		{
 		$encrypted_mypassword = md5($p);
-		$query = "INSERT INTO login (username, password, level) VALUES ('$u', '$encrypted_mypassword', '$l')";
+		$query = "INSERT INTO details (username, password, level) VALUES ('$u', '$encrypted_mypassword', '$l')";
 		mysqli_query($connect,$query) or die ("Error Query [".$strSQL."]");
 		$query = "FLUSH PRIVILEGES";
-		
-		echo '<meta http-equiv="refresh" content="0;url=./index.php?s=true">'; 
+
+		echo '<meta http-equiv="refresh" content="0;url=./index.php?s=tu">';
 
 		}
 

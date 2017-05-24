@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.1
--- http://www.phpmyadmin.net
+-- version 4.6.5.2
+-- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 15, 2016 at 11:47 PM
--- Server version: 10.1.13-MariaDB
--- PHP Version: 5.6.21
+-- Generation Time: May 24, 2017 at 12:18 PM
+-- Server version: 10.1.21-MariaDB
+-- PHP Version: 5.6.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -19,6 +19,17 @@ SET time_zone = "+00:00";
 --
 -- Database: `ofs2`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bill`
+--
+
+CREATE TABLE `bill` (
+  `billID` int(30) NOT NULL,
+  `timepayment` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -60,18 +71,22 @@ CREATE TABLE `corder` (
   `tdisc` int(40) NOT NULL,
   `pos` varchar(50) NOT NULL,
   `status` varchar(30) NOT NULL,
+  `billID` varchar(25) NOT NULL,
   `imglink` varchar(40) NOT NULL,
-  `tmpayment` datetime NOT NULL
+  `tmpayment` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `corder`
 --
 
-INSERT INTO `corder` (`num`, `transactionid`, `item_id`, `user_id`, `qty`, `total`, `ftotal`, `discount`, `tdisc`, `pos`, `status`, `imglink`, `tmpayment`) VALUES
-(14, 'im23421ogglom8u70996frlkr3', 57, '16', 1, 130, 130, 0, 0, 'Your Postage is Free', 'Waiting Confirmation', '', '0000-00-00 00:00:00'),
-(16, 'gaqpje2922mvg78kp1gp2800l7', 48, '16', 1, 40, 40, 0, 0, 'You have to pay RM 6 to cover the postage Fees', 'Waiting Confirmation', '', '0000-00-00 00:00:00'),
-(15, 'p9f9ehg7i20bppl3m6nucem2i2', 57, '16', 1, 130, 130, 0, 0, 'Your Postage is Free', 'Waiting Confirmation', '', '0000-00-00 00:00:00');
+INSERT INTO `corder` (`num`, `transactionid`, `item_id`, `user_id`, `qty`, `total`, `ftotal`, `discount`, `tdisc`, `pos`, `status`, `billID`, `imglink`, `tmpayment`) VALUES
+(1, 'e7r16uphgcr7kqd1mvt730ri15', 44, '3', 1, 100, 100, 0, 0, 'You have to pay RM 6 to cover the postage Fees', '3', '', '', '2017-05-24 09:30:25'),
+(3, '3q60k3ov320v1ka4p81h5121n1', 46, '3', 1, 60, 178, 0, 0, 'Your Postage is Free', '3', '', '', '2017-05-24 11:09:34'),
+(2, 'sldkug91tdm0cntglt73hevfv2', 56, '3', 1, 150, 150, 0, 0, 'Your Postage is Free', '3', '', '', '2017-05-24 09:53:10'),
+(4, '3q60k3ov320v1ka4p81h5121n1', 33, '3', 2, 118, 178, 0, 0, 'Your Postage is Free', '3', '', '', '2017-05-24 11:09:34'),
+(5, 'ig3664l1d4slrl13ficbf353b4', 47, '3', 1, 45, 45, 0, 0, 'You have to pay RM 6 to cover the postage Fees', '3', '', '', '2017-05-24 11:23:34'),
+(6, '5apafiu29koqe82v6nlmm2l861', 46, '3', 1, 60, 60, 0, 0, 'You have to pay RM 6 to cover the postage Fees', '3', '', '', '2017-05-24 11:49:36');
 
 -- --------------------------------------------------------
 
@@ -82,31 +97,22 @@ INSERT INTO `corder` (`num`, `transactionid`, `item_id`, `user_id`, `qty`, `tota
 CREATE TABLE `details` (
   `num` int(100) NOT NULL,
   `name` varchar(50) NOT NULL,
-  `loginID` int(50) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `email` varchar(50) NOT NULL,
   `address` text NOT NULL,
-  `notel` varchar(15) NOT NULL
+  `notel` varchar(15) NOT NULL,
+  `level` int(10) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `details`
 --
 
-INSERT INTO `details` (`num`, `name`, `loginID`, `address`, `notel`) VALUES
-(2, 'Muhammad Adib bin Ahmad Roslan', 7, '31 , Jalan Batu 2, BB4, Bukit Gambir ,48300 Selangor', '0176213816'),
-(3, 'Cust1', 8, '', ''),
-(4, 'Cust3', 9, '', ''),
-(5, 'Cust33', 10, '', ''),
-(6, '', 11, '', ''),
-(7, 'Muhammad Kalatono', 12, 'Tambiro jalan kubur 2', '017626262'),
-(8, '', 13, '', ''),
-(9, 'Muhammad Iskandar Bin Jaafar', 14, '', ''),
-(10, 'Muhammad Muinnudin', 15, '', ''),
-(11, 'Coklet Boot', 16, '', ''),
-(12, 'Pudding', 17, 'No 9 Taman Bahagia Jalan Pasar', '017'),
-(13, 'Puding', 18, '', ''),
-(14, 'Acap', 19, '', ''),
-(15, 'Aminah', 20, '', ''),
-(16, 'Customer', 21, '', '');
+INSERT INTO `details` (`num`, `name`, `username`, `password`, `email`, `address`, `notel`, `level`) VALUES
+(1, 'Muhammad Adib', 'admin', '21232f297a57a5a743894a0e4a801fc3', 'adbroslan@gmail.com', 'no 31, jalan kemboja 2', '0176213816', 1),
+(2, 'Muhammad Iskandar', 'staff', '1253208465b1efa876f982d8a9e73eef', 'staff@gmail.com', 'no 44, jalan nilai utara, ', '0128882992', 2),
+(3, 'Iyad Mizwaruddin Bin Yaccob', 'cust', '3aad3506aa11f05f265ea8304b8152b3', 'cust@gmail.com', 'no 22/2  jalan purnama 4.', '019888282', 3);
 
 -- --------------------------------------------------------
 
@@ -182,28 +188,36 @@ INSERT INTO `item` (`num`, `itemName`, `itemPrice`, `itemDesc`, `imglink`, `cate
 -- --------------------------------------------------------
 
 --
--- Table structure for table `login`
+-- Table structure for table `status`
 --
 
-CREATE TABLE `login` (
-  `num` int(50) NOT NULL,
-  `username` varchar(20) NOT NULL,
-  `password` varchar(150) NOT NULL,
-  `level` int(1) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+CREATE TABLE `status` (
+  `statusID` int(10) NOT NULL,
+  `statusName` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `login`
+-- Dumping data for table `status`
 --
 
-INSERT INTO `login` (`num`, `username`, `password`, `level`) VALUES
-(4, 'user', '6ad14ba9986e3615423dfca256d04e3f', 2),
-(5, 'admin', '21232f297a57a5a743894a0e4a801fc3', 1),
-(21, 'cust', '3aad3506aa11f05f265ea8304b8152b3', 3);
+INSERT INTO `status` (`statusID`, `statusName`) VALUES
+(1, 'Waiting Payment'),
+(2, 'Complete'),
+(3, 'Waiting Confirmation'),
+(4, 'Payment Made'),
+(5, 'Cancel'),
+(6, 'Waiting Customer Payment');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `bill`
+--
+ALTER TABLE `bill`
+  ADD PRIMARY KEY (`billID`),
+  ADD UNIQUE KEY `billID` (`billID`);
 
 --
 -- Indexes for table `category`
@@ -230,10 +244,10 @@ ALTER TABLE `item`
   ADD PRIMARY KEY (`num`);
 
 --
--- Indexes for table `login`
+-- Indexes for table `status`
 --
-ALTER TABLE `login`
-  ADD PRIMARY KEY (`num`);
+ALTER TABLE `status`
+  ADD PRIMARY KEY (`statusID`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -248,22 +262,22 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `corder`
 --
 ALTER TABLE `corder`
-  MODIFY `num` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `num` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `details`
 --
 ALTER TABLE `details`
-  MODIFY `num` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `num` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `item`
 --
 ALTER TABLE `item`
   MODIFY `num` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
 --
--- AUTO_INCREMENT for table `login`
+-- AUTO_INCREMENT for table `status`
 --
-ALTER TABLE `login`
-  MODIFY `num` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+ALTER TABLE `status`
+  MODIFY `statusID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

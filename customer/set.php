@@ -1,9 +1,9 @@
-   <?php 
+   <?php
 
 include 'include/check.php';
 include '../include/db.php';
 $num = $_SESSION['cnum'];
-$sql = "SELECT * from details where loginID = '$num'";
+$sql = "SELECT * from details where num = '$num'";
 $result = mysqli_query($connect,$sql);
 
 ?>
@@ -18,7 +18,7 @@ $result = mysqli_query($connect,$sql);
                         <h1 class="page-header">
                             Update Customer <small>Details</small>
                         </h1>
-                        
+
                     </div>
                 </div>
         <div class="row">
@@ -35,8 +35,11 @@ $result = mysqli_query($connect,$sql);
                      Phone Number </br>
                        <input class="form-control"  type="notel" name = "notel" value = "<?=$row2['notel']; ?>" required>
                          </br>
+                     Email </br>
+                       <input class="form-control"  type="email" name = "email" value = "<?=$row2['email']; ?>" required>
+                         </br>
 
-                    <input type="hidden" name = "id" value = "<?=$num?>">		
+                    <input type="hidden" name = "id" value = "<?=$num?>">
 
                     <?php  }  ?>
                          <input class="btn btn-primary" type ="submit"  class  = "btn" name = "submit" id ="submit" value="Submit">
@@ -46,4 +49,3 @@ $result = mysqli_query($connect,$sql);
     </div>
     <!-- /.footer -->
     <?php include "include/footer.php"; ?>
-

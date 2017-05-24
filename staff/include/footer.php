@@ -3,12 +3,20 @@
            $s = $_GET['s'];
          switch ($s){
             case 't':
-            echo  '<script type="text/javascript" language="javascript"> 
+            echo  '<script type="text/javascript" language="javascript">
             swal("Succesful", "Successs Adding to Cart", "success");</script>';
             break;
             case 'f':
             echo  '<script type="text/javascript" language="javascript"> swal("Failed", "Fail to add to cart", "error");
             </script>';
+            break;
+            case 'tu':
+            echo  '<script type="text/javascript" language="javascript">
+            swal("Succesful", "Successs", "success");</script>';
+            break;
+            case 'fu':
+            echo  '<script type="text/javascript" language="javascript">
+            swal("Failed", "Fail, Something is wrong", "error");</script>';
             break;
             case 'lt':
             echo  '<script type="text/javascript" language="javascript"> swal("Succesful", "Welcome user!", "success");
@@ -18,6 +26,14 @@
             echo  '<script type="text/javascript" language="javascript"> swal("Failed", "username or password went wrong", "error");
             </script>';
             break;
+            case 'it':
+           echo  '<script type="text/javascript" language="javascript"> swal("Succesful", "Succesful", "success");
+           </script>';
+           break;
+           case 'if':
+          echo  '<script type="text/javascript" language="javascript"> swal("Failed", "Something went wrong", "error");
+          </script>';
+          break;
             case 'sf':
             echo  '<script type="text/javascript" language="javascript"> swal("Failed", "You have no Access! Login First!", "error");
             </script>';
@@ -45,31 +61,67 @@
             echo  '<script type="text/javascript" language="javascript"> swal("Upload Failed", "Image format is wrong, upload .jpg or .png only!", "error");
             </script>';
             break;
-        default:  
+        default:
             }
-       }?> 
- <div class="container">
+       }?>
+       <div class="container">
 
-        <hr>
+           <hr>
 
-        <!-- Footer -->
-        <footer class="footer">
-            <div class="row">
-                <div class="col-lg-12">
-                    <p>Copyright &copy;Team <strong>VyHeracless </strong> 2016</p>
-                </div>
-            </div>
-        </footer>
+           <!-- Footer -->
+           <footer class="footer">
+               <div class="row">
+                   <div class="col-lg-12">
+                       <p>Copyright &copy;<strong>G5CProjects</strong> 2017</p>
+                   </div>
+               </div>
+           </footer>
 
-    </div>
-    <!-- /.container -->
+       </div>
+       <!-- /.container -->
 
-    <!-- jQuery -->
-    <script src="../js/jquery.js"></script>
+       <!-- jQuery -->
+       <script src="../js/jquery.js"></script>
 
-    <!-- Bootstrap Core JavaScript -->
-    <script src="../js/bootstrap.min.js"></script>
-    
-</body>
+       <!-- Bootstrap Core JavaScript -->
+       <script src="../js/bootstrap.min.js"></script>
 
-</html>
+       <script src="../include/dataTables/jquery.dataTables.js"></script>
+       <script src="../include/dataTables/dataTables.bootstrap.js"></script>
+
+
+
+      <script>
+       $(document).ready(function() {
+           $('#dataTables-example').DataTable({
+                   responsive: true
+           });
+       });
+
+
+       </script>
+
+
+      <script>
+           $('#confirmation').click(function(e) {
+           e.preventDefault(); // Prevent the href from redirecting directly
+           var linkURL = $(this).attr("href");
+           warnBeforeRedirect(linkURL);
+           });
+
+            function warnBeforeRedirect(linkURL) {
+               swal({
+                 title: "Delete This Record?",
+                 text: "Caution! You cannot reverse this!",
+                 type: "warning",
+                 showCancelButton: true
+               }, function() {
+                 // Redirect the user
+                 window.location.href = linkURL;
+               });
+             }
+       </script>
+      <script type="text/javascript" src="../include/ckeditor/ckeditor.js"></script>
+      </body>
+
+      </html>

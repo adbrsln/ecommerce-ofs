@@ -14,8 +14,8 @@ if(isset($_POST["submit"])) {
     if($check !== false) {
         //echo "File is an image - " . $check["mime"] . ".";
         $uploadOk = 1;
-        
-        $query2 = "UPDATE corder set imglink = '$img',status='Payment Made'  where transactionid = '$i'";
+
+        $query2 = "UPDATE corder set imglink = '$img',status='4'  where transactionid = '$i'";
         mysqli_query($connect,$query2) or die('Error: ' . mysqli_error());
         echo '<script type="text/javascript">window.location = "'; echo 'order.php?id=';echo $i; echo '&s=t&img='; echo $img ;
         echo '"</script>';
@@ -46,8 +46,8 @@ echo '<script type="text/javascript">window.location = "'; echo 'order.php?id=';
 // if everything is ok, try to upload file
 } else {
     if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-        
-           $query2 = "UPDATE corder set imglink = '$img', status='Payment Made'  where transactionid = '$i'";
+
+           $query2 = "UPDATE corder set imglink = '$img', status='4'  where transactionid = '$i'";
         mysqli_query($connect,$query2) or die('Error: ' . mysqli_error());
          echo '<script type="text/javascript">window.location = "'; echo 'order.php?id=';echo $i; echo '&s=t&img='; echo $img ;
         echo '"</script>';
