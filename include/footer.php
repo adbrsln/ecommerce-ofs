@@ -26,7 +26,7 @@
             echo  '<script type="text/javascript" language="javascript"> swal("Failed", "You have no Access! Login First!", "error");
             </script>';
             case 'sfc':
-            echo  '<script type="text/javascript" language="javascript"> swal("Failed", "Your cart is empty ! You will be redirected to shopping page", "error");
+            echo  '<script type="text/javascript" language="javascript"> swal("Oops!", "Your cart is empty ! You will be redirected to shopping page", "warning");
             </script>';
             break;
             case 'p':

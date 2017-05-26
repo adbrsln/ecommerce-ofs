@@ -103,7 +103,7 @@ $result = mysqli_query($connect,$sql2);
                                 <p>Category</p>
                                 <select class ="form-control" name = "category">
                                     <?php while($row3 = mysqli_fetch_assoc($result)){ ?>
-                                  <option value = "<?=$row3['name'];?>"><?=$row3['name'];?></option>
+                                  <option value = "<?=$row3['num'];?>"><?=$row3['name'];?></option>
 
                                   <?php } ?>
                                 </select>

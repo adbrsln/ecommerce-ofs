@@ -2,7 +2,9 @@
 include 'include/check.php';
 include '../include/db.php';
 
-$sql2 = "SELECT DISTINCT  corder.tmpayment, corder.transactionid,corder.ftotal,corder.status,details.loginID,details.name as name FROM corder join details on corder.user_id = details.num join login on details.loginID = login.num";
+$sql2 = "SELECT DISTINCT  corder.billid,corder.tmpayment, corder.transactionid,corder.ftotal,corder.status,details.num,details.name as name,status.statusID,status.statusName FROM corder
+join details on corder.user_id = details.num
+join status on corder.status = status.statusID  ";
 
 $result2 = mysqli_query($connect,$sql2);
 $p=mysqli_num_rows($result2);
@@ -43,7 +45,15 @@ $p=mysqli_num_rows($result2);
                                     <td><?php echo $row2['tmpayment']; ?></td>
                                      <td><?php echo $row2['name']; ?></td>
                                      <td><?php echo 'MYR '.$row2['ftotal']; ?></td>
-                                     <td><?php echo $row2['status']; ?></td>
+                                     <td><?php switch($row2['statusID']){
+                                             case 1 : echo '<span class="label label-primary">'; echo $row2['statusName']; echo '</span>'; break;
+                                             case 2 : echo '<span class="label label-success">'; echo $row2['statusName']; echo '</span>'; break;
+                                             case 3 : echo '<span class="label label-primary">'; echo $row2['statusName']; echo '</span>'; break;
+                                             case 4 : echo '<span class="label label-danger">'; echo $row2['statusName']; echo '</span>'; break;
+                                             case 5 : echo '<span class="label label-danger">'; echo $row2['statusName']; echo '</span>'; break;
+                                             case 6 : echo '<span class="label label-warning">'; echo $row2['statusName']; echo '</span>'; break;
+                                             }?>
+                                     </td>
                                      <td>
                                        <center>
                                        <a  class = "btn btn-primary btn-sm" href="edit.php?id=<?=$row2['transactionid'];?>" >View</a>&nbsp;

@@ -62,21 +62,7 @@ $p=mysqli_num_rows($result2);
                                         </tbody>
                                     </table>
                                     <!--- bawah ni pagination-->
-                                 	<?php
-                                            $sql = "SELECT num transactionid FROM category";
-                                            $rs_result = mysqli_query($connect,$sql); //run the query
-                                            $total_records = mysqli_num_rows($rs_result);  //count number of records
-                                            $total_pages = ceil($total_records / $num_rec_per_page);
-
-                                            echo '<ul class="pagination">';
-                                            echo '<li><a href="cat.php?page=1">&laquo;</a></li>';
-                                            for ($i=1; $i<=$total_pages; $i++) {
-
-                                                         echo "<li><a href='cat.php?page=".$i."'>".$i."</a></li>";
-                                            };
-                                            echo "<li><a href='cat.php?page=$total_pages'>&raquo;</a></li>";
-                                            echo "</ul>";
-                                        ?>
+                                 	
                                 </div>
 
                             </div>

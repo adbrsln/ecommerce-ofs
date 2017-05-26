@@ -4,7 +4,7 @@ include '../include/db.php';
 $num = $_GET['id'];
 
 $sql = "SELECT * FROM item where num = '$num'";
-$result = mysqli_query($connect,$sql); 
+$result = mysqli_query($connect,$sql);
 $sql3 = "SELECT * FROM category";
 $result3 = mysqli_query($connect,$sql3);
 ?>
@@ -17,12 +17,12 @@ $result3 = mysqli_query($connect,$sql3);
        <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Category <small>Management</small>
+                            Item <small>Management</small>
                         </h1>
-                        
+
                     </div>
                 </div>
-             
+
 
                <div class="row">
                     <div class="col-lg-12">
@@ -42,17 +42,17 @@ $result3 = mysqli_query($connect,$sql3);
                                     <div class="col-lg-12">
                                         <?php while($row2 = mysqli_fetch_assoc($result)){ ?>
                                         <form method="POST" action = "iproses.php">
-	
+
                                         Item Name</br>
                                            <input class="form-control"  type="text" name = "itemname"  value = "<?=$row2["itemName"]?>" required>
                                             </br>
                                         <a>Item Price</a> </br>
                                            <input class="form-control"  type="text" name = "itemprice" value = "<?=$row2["itemPrice"]?>" required>
                                              </br>
-                                        <a>Item Description</a></br>  
+                                        <a>Item Description</a></br>
                                            <input class="form-control"  type="text" name = "desc"  value = "<?=$row2["itemDesc"]?>" required></a>
                                              </br>
-                                        <a>Category</a></br>  
+                                        <a>Category</a></br>
                                             <select class ="form-control" name = "category">
                                                 <option selected value="<?=$row2["categ"]?>"><?=$row2["categ"]?></option>
                                                 <?php while($row3 = mysqli_fetch_assoc($result3)){ ?>
@@ -60,7 +60,7 @@ $result3 = mysqli_query($connect,$sql3);
                                                <?php }?>
                                             </select>
                                             </br></br>
-                                        <a>Item image link</a></br>  
+                                        <a>Item image link</a></br>
                                            <input class="form-control" required type="text" name = "img"  value = "<?php if(isset($_GET['img'])){ echo $_GET['img'];} else echo $row2["imglink"];?>" ></a>
                                              </br>
                                         <?php  }  ?>
@@ -72,7 +72,7 @@ $result3 = mysqli_query($connect,$sql3);
                         </div>
                     </div>
                 </div>
-             
+
         <div class="modal fade" id="myModal" role="dialog">
                 <div class="modal-dialog">
 
@@ -83,12 +83,12 @@ $result3 = mysqli_query($connect,$sql3);
                       <h4 class="modal-title">Upload image for item</h4>
                     </div>
                     <div class="modal-body">
-                      
+
                         <form action="upload.php" method="post" enctype="multipart/form-data">
                             <p>Only upload an image with the <strong>size of 800x500 only !</strong></p>
                             <p>Select image to upload:</p>
                         <input type="file" name="fileToUpload"  id="fileToUpload">
-                        
+
                         <input type ="hidden" name ="id" value = "<?= $num; ?>">
                         </div>
                     <div class="modal-footer">
@@ -103,4 +103,3 @@ $result3 = mysqli_query($connect,$sql3);
     </div>
     <!-- /.footer -->
     <?php include "include/footer.php"; ?>
-

@@ -17,7 +17,7 @@ $count = mysqli_num_rows($login) ;
 					$_SESSION['usernamela'] = $username;
 
 					$_SESSION['levella'] = $row['level'];
-					
+
 
 					$_SESSION['coname'] = $row['name'];
 					$_SESSION['address'] = $row['address'];
@@ -42,7 +42,9 @@ $count = mysqli_num_rows($login) ;
 					break;
 				case 3:
 
-
+          if (isset($_SESSION['cart'])){
+            header('Location: ../cart.php');
+          }else
 					header('Location: ../customer/index.php');
 					break;
 

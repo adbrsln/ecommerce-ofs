@@ -23,7 +23,7 @@ if ($num > 0) {
 		mysqli_query($connect,$query2) or die('Error: ' . mysqli_error());
 		$querydaftar = "FLUSH PRIVILEGES";
 
-		 echo '<meta http-equiv="refresh" content="0;url=/projekweb/customer/index.php">';
+		 echo '<meta http-equiv="refresh" content="0;url=./customer/index.php">';
 		 echo "<script>alert('Order is cancel!')</script>";
 	}
 	else {

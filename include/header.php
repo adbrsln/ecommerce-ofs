@@ -1,4 +1,4 @@
- 
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,11 +21,11 @@ Online Fan Shop</title>
 
     <!-- footer CSS -->
     <link href="css/stickyfooter.css" rel="stylesheet">
-    
+
     <link href="css/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <script src="js/sweetalert.min.js"></script>
     <link rel="stylesheet" href="css/sweetalert.css">
-    
+
     <script type="text/javascript">
     function agree(){
       if(document.getElementById('agreet').checked) {
@@ -36,7 +36,7 @@ Online Fan Shop</title>
 
         }
     }
-        
+
 
   </script>
 </head>
@@ -59,8 +59,8 @@ Online Fan Shop</title>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                   
-	
+
+
                     <li class="dropdown">
                         <a class="dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Category<span class="caret"></span></a>
                         <ul class="dropdown-menu">
@@ -69,20 +69,20 @@ Online Fan Shop</title>
                                 $sql2 = "Select * from category" ;
                                 $result2 = mysqli_query($connect,$sql2);
                                 while($row2 = mysqli_fetch_assoc($result2)){ ?>
-                                <li><a href="item.php?cat=<?= $row2['name'];?>"><?= $row2['name'];?></a></li>
+                                <li><a href="item.php?cat=<?= $row2['num'];?>"><?= $row2['name'];?></a></li>
                                 <?php  }  ?>
-                            
+
                             <!--<li role="separator" class="divider"></li>
                             <li><a href="#">Separated link</a></li> -->
-                            
+
                           </ul>
                     </li>
-                    
-                   
+
+
                     <li>
                         <a href="contact.php">Contact</a>
                     </li>
-                    
+
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li>

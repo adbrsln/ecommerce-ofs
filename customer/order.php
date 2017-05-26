@@ -9,17 +9,16 @@ if (isset($_GET["id"])) {
     $sql4 = "Update corder set billID = '$billid' ,status = '4' where transactionid = '$transid'";
     mysqli_query($connect,$sql4);
   }
-   $query3="SELECT distinct corder.imglink as imglink,corder.status as status, details.name as name,details.address as address , details.notel as notel FROM corder
-   join details on corder.user_id = details.num
-   WHERE corder.transactionid = '$transid'"; //index details
-	$result3 =mysqli_query($connect,$query3);
-	$count = mysqli_num_rows($result3);
+
+     $query3="SELECT distinct corder.imglink as imglink,status.statusName as status, details.name as name,details.address as address , details.notel as notel FROM corder
+     join details on corder.user_id = details.num join status on corder.status = status.statusID WHERE corder.transactionid = '$transid'"; //index details
+  	$result3 =mysqli_query($connect,$query3);
+  	$count = mysqli_num_rows($result3);
 
 
 	if ($count > 0){
-		$query="SELECT corder.item_id, corder.qty as qty  , corder.total as subtotal, corder.ftotal as total, item.itemName as itemname,item.num FROM corder
-    join item on corder.item_id = item.num
-    WHERE transactionid = '$transid'";
+    $query="SELECT corder.item_id, corder.qty as qty  , corder.total as subtotal, corder.ftotal as total, item.itemName as itemname,item.num FROM corder
+    join item on corder.item_id = item.num WHERE transactionid = '$transid'";
 		$result=mysqli_query($connect,$query);
 
 		$query2="SELECT DISTINCT num,ftotal,status FROM corder WHERE transactionid = '$transid'";
@@ -28,21 +27,34 @@ if (isset($_GET["id"])) {
 			$ftotal = $row3['ftotal'];
 			$status = $row3['status'];
             $orderid = $row3['num'];
-            if ($status == '2'){
+            if ($status == '2'){ //complete
                 $paramstatus ="btn btn-primary disabled";
                 $paramstatus3 ="btn btn-danger disabled";
-            }else if ($status == '3') {
-                $paramstatus3 ="btn btn-danger disabled";
-                $paramstatus ="btn btn-primary disabled";
-                $paramstatus4 ="btn btn-success";
+                $paramstatus4 ="btn btn-warning ";
+            }else if ($status == '1') { //waiting confirmation
+                $paramstatus ="btn btn-primary ";
                 $paramstatus3 ="btn btn-danger ";
-              }else if ($status == '4') {
+                $paramstatus4 ="btn btn-warning ";
+            }else if ($status == '3') { //waiting confirmation
+                $paramstatus ="btn btn-primary ";
+
+                $paramstatus3 ="btn btn-danger ";
+                $paramstatus4 ="btn btn-warning ";
+            }else if ($status == '4') { //payment made
                 $paramstatus ="btn btn-primary disabled ";
+
                 $paramstatus3 ="btn btn-danger ";
-                $paramstatus4 ="btn btn-success disabled ";
+                $paramstatus4 ="btn btn-warning disabled";
+            }else if ($status == '6') { //ondevlivery
+                $paramstatus ="btn btn-primary disabled";
+
+                $paramstatus3 ="btn btn-danger  ";
+                $paramstatus4 ="btn btn-warning disabled ";
             }else {
-                 $paramstatus ="btn btn-primary ";
+                 $paramstatus ="btn btn-primary disabled";
+
                 $paramstatus3 ="btn btn-danger ";
+                $paramstatus4 ="btn btn-warning disabled";
             }
 		}
 

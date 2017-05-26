@@ -6,7 +6,7 @@ $num_rec_per_page=10;
 $id = $_SESSION['cnum'];
 $sql2 = "SELECT DISTINCT  corder.billid,corder.tmpayment, corder.transactionid,corder.ftotal,corder.status,details.num,details.name as name,status.statusID,status.statusName FROM corder
 join details on corder.user_id = details.num
-join status on corder.status = status.statusID WHERE details.num = $id  ";
+join status on corder.status = status.statusID WHERE details.num = $id ORDER BY (tmpayment) DESC ";
 $result2 = mysqli_query($connect,$sql2);
 $p=mysqli_num_rows($result2);
 
@@ -42,7 +42,16 @@ $p=mysqli_num_rows($result2);
                                    </tr>
                               </thead>
                               <tbody>
-                                  <?php $total_rows = 1; while($row2 = mysqli_fetch_assoc($result2)){  ?>
+                                  <?php $total_rows = 1; while($row2 = mysqli_fetch_assoc($result2)){
+                                    
+                                    if ($row2['billid'] !=""){
+                                     $param1 = 'https://billplz-staging.herokuapp.com/bills/' . $row2['billid'];
+                                     $param2 = 'btn btn-success btn-sm';
+                                   }else{
+                                     $param1 = '#';
+                                     $param2 = 'btn btn-success btn-sm disabled ';
+                                   }
+                                    ?>
                                     <tr>
                                       <td><?php echo $total_rows; ?></td>
                                      <td><?php echo $row2['tmpayment']; ?></td>
@@ -50,14 +59,17 @@ $p=mysqli_num_rows($result2);
                                       <td><?php echo 'MYR '.$row2['ftotal']; ?></td>
                                       <td><?php switch($row2['statusID']){
                                               case 1 : echo '<span class="label label-primary">'; echo $row2['statusName']; echo '</span>'; break;
-                                              case 2 : echo '<span class="label label-warning">'; echo $row2['statusName']; echo '</span>'; break;
-                                              case 3 : echo '<span class="label label-success">'; echo $row2['statusName']; echo '</span>'; break;
+                                              case 2 : echo '<span class="label label-success">'; echo $row2['statusName']; echo '</span>'; break;
+                                              case 3 : echo '<span class="label label-primary">'; echo $row2['statusName']; echo '</span>'; break;
                                               case 4 : echo '<span class="label label-danger">'; echo $row2['statusName']; echo '</span>'; break;
+                                              case 5 : echo '<span class="label label-danger">'; echo $row2['statusName']; echo '</span>'; break;
+                                              case 6 : echo '<span class="label label-warning">'; echo $row2['statusName']; echo '</span>'; break;
                                               }?>
                                       </td>
                                       <td><center>
+
                                         <a  class = "btn btn-primary btn-sm" href="order.php?id=<?=$row2['transactionid'];?>" ><i class="glyphicon glyphicon-eye-open"></i></a>
-                                        <a  class = "btn btn-success btn-sm" target="_blank" href="https://billplz-staging.herokuapp.com/bills/<?=$row2['billid'];?>" ><i class="glyphicon glyphicon-list-alt"> </i></a>
+                                        <a  class = "<?php echo $param2;?>" target="_blank" href="<?php echo $param1;?>" ><i class="glyphicon glyphicon-list-alt"> </i></a>
                                         <a  class = "btn btn-danger btn-sm" href="del.php?id=<?=$row2['transactionid'];?>" ><i class="glyphicon glyphicon-trash"></i></a>
                                         <center>
                                         </td>

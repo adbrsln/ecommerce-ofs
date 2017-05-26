@@ -3,7 +3,8 @@
     <!-- end header Content -->
 
     <!-- Page Content -->
-    <div class="container">
+<section id="main">
+    <div class="wrapper container">
 
 
         <!-- Title -->
@@ -81,7 +82,7 @@
 
         <!-- /.row -->
     </div>
-
+</section>
 
        <!-- footer Content -->
    <?php include "include/footer.php"; ?>

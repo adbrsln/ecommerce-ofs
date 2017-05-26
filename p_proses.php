@@ -29,7 +29,7 @@ $transid=session_id();
             $total =  $price * $qty;
             $itemid = $row['num'];
 
-           $query2 = "INSERT INTO corder (transactionid,item_id,user_id,qty,total,ftotal,discount,pos,tdisc,status) VALUES ('$transid','$itemid','$uid','$qty','$total','$ftotal','$discount','$pos','$totaldiscount','6')";
+           $query2 = "INSERT INTO corder (transactionid,item_id,user_id,qty,total,ftotal,discount,pos,tdisc,status) VALUES ('$transid','$itemid','$uid','$qty','$total','$ftotal','$discount','$pos','$totaldiscount','1')";
             mysqli_query($connect,$query2) or die ("Error Query [".$strSQL."]");
 
             $cname = $_SESSION['coname'];
