@@ -9,10 +9,10 @@ include 'include/db.php';
   $start_from = ($page-1) * $num_rec_per_page;
   $i = $_GET["cat"];
 
-	$query="SELECT * FROM item join category on item.categ = category.num WHERE item.categ = '$i' LIMIT $start_from, $num_rec_per_page";
+	$query="SELECT item.itemName,item.num as id,item.itemPrice,item.itemDesc,item.imglink,item.categ as catid,category.name as cname FROM item join category on item.categ = category.num WHERE item.categ = '$i' LIMIT $start_from, $num_rec_per_page";
   $result=mysqli_query($connect,$query);
   while($row2 = mysqli_fetch_assoc($result)){
-    $categoryname = $row2['name'];
+    $categoryname = $row2['cname'];
   }
 
 	 if(isset($_GET['action']) && $_GET['action']=="add"){
@@ -79,7 +79,8 @@ include 'include/db.php';
 
             <div class="col-md-9">
               <div class="row">
-                    <?php while($row = mysqli_fetch_assoc($result)){ ?>
+                    <?php
+									  $result=mysqli_query($connect,$query); while($row = mysqli_fetch_assoc($result)){ ?>
                     <div class="col-md-4 col-sm-6 hero-feature">
                         <div class="thumbnail">
                             <img src="<?php echo './image/'.$row['imglink'];?>" alt="">
@@ -87,14 +88,14 @@ include 'include/db.php';
                             <div class="caption">
                                 <h5 class="pull-right">MYR <strong><?php echo $row['itemPrice'];echo '.00'?></strong></h5>
                                 <h4>
-                                  <a href="#"><?php $itemn = $row['itemName']; echo substr("$itemn",0,30); ?></a>
+                                  <a href="item2.php?id=<?php echo $row['id'] ?>"><?php $itemn = $row['itemName']; echo substr("$itemn",0,30); ?></a>
                                 </h4>
                                 <p><?php $itemd = $row['itemDesc']; echo substr("$itemd",0,20).'...'; ?></p>
                             </div>
 
                             <p>
                               <center>
-                                    <a  style = "text-decoration:none;" class ="btn btn-primary"  href="item.php?cat=<?php echo $row2['categ'] ?>&action=add&id=<?php echo $row2['num'] ?>">Add to Cart</a>
+                                    <a  style = "text-decoration:none;" class ="btn btn-primary"  href="item.php?cat=<?php echo $row['catid'] ?>&action=add&id=<?php echo $row['id'] ?>">Add to Cart</a>
                               </center>
                             </p>
                         </div>

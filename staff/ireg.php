@@ -36,7 +36,7 @@ $result3 = mysqli_query($connect,$sql3);
                     <div class="col-lg-12">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-user fa-fw"></i> Category List</h3>
+                                <h3 class="panel-title"><i class="fa fa-user fa-fw"></i> Item Details</h3>
                             </div>
                             <div class="panel-body">
                                     <div class="col-lg-12">
@@ -50,7 +50,8 @@ $result3 = mysqli_query($connect,$sql3);
                                            <input class="form-control"  type="text" name = "itemprice" value = "<?=$row2["itemPrice"]?>" required>
                                              </br>
                                         <a>Item Description</a></br>
-                                           <input class="form-control"  type="text" name = "desc"  value = "<?=$row2["itemDesc"]?>" required></a>
+                                          <textarea class="form-control ckeditor" cols = "77" name= "desc" rows="5"><?=$row2["itemDesc"]?></textarea>
+
                                              </br>
                                         <a>Category</a></br>
                                             <select class ="form-control" name = "category">

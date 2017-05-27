@@ -30,7 +30,7 @@ if (isset($_GET["id"])) {
             if ($status == '2'){ //complete
                 $paramstatus ="btn btn-primary disabled";
                 $paramstatus3 ="btn btn-danger disabled";
-                $paramstatus4 ="btn btn-warning ";
+                $paramstatus4 ="btn btn-warning disabled";
             }else if ($status == '1') { //waiting confirmation
                 $paramstatus ="btn btn-primary ";
                 $paramstatus3 ="btn btn-danger ";

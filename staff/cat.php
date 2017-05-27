@@ -62,7 +62,7 @@ $p=mysqli_num_rows($result2);
                                         </tbody>
                                     </table>
                                     <!--- bawah ni pagination-->
-                                 	
+
                                 </div>
 
                             </div>
@@ -85,7 +85,7 @@ $p=mysqli_num_rows($result2);
                             <p>Category Name</p>
                             <input type="text" class="form-control" name ="catname">
                             <p>Category Description</p>
-                            <input type="text" class="form-control" name="catdesc">
+                            <textarea class="form-control ckeditor" cols = "77" name= "catdesc" rows="5"></textarea>
 
 
 

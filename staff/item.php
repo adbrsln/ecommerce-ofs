@@ -80,7 +80,7 @@ $result = mysqli_query($connect,$sql2);
                     </div>
                 </div>
         <div class="modal fade" id="myModal" role="dialog">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-lg">
 
                   <!-- Modal content-->
                   <div class="modal-content">
@@ -98,7 +98,8 @@ $result = mysqli_query($connect,$sql2);
                                <input class="form-control"  type="text" name = "itemprice"  required>
                                  </br>
                                 <p>Item Description  </p>
-                               <input class="form-control"  type="text" name = "desc"  required></a>
+
+                               <textarea class="form-control ckeditor" cols = "77" name= "desc" rows="5"></textarea>
                                  </br>
                                 <p>Category</p>
                                 <select class ="form-control" name = "category">
