@@ -4,9 +4,11 @@ include '../include/db.php';
 
 $num_rec_per_page=10;
 $id = $_SESSION['cnum'];
-$sql2 = "SELECT DISTINCT  corder.billid,corder.tmpayment, corder.transactionid,corder.ftotal,corder.status,details.num,details.name as name,status.statusID,status.statusName FROM corder
-join details on corder.user_id = details.num
-join status on corder.status = status.statusID WHERE details.num = $id ORDER BY (tmpayment) DESC ";
+$sql2 = "SELECT DISTINCT corder.billid,corder.tmpayment, corder.transactionid,corder.ftotal,corder.status,details.num,details.name as name,status.statusID,status.statusName, pos.posid as posid
+FROM corder join details on corder.user_id = details.num
+join status on corder.status = status.statusID
+left join pos on corder.transactionid = pos.transid
+WHERE details.num = 3 ORDER BY (tmpayment) DESC";
 $result2 = mysqli_query($connect,$sql2);
 $p=mysqli_num_rows($result2);
 
@@ -43,7 +45,7 @@ $p=mysqli_num_rows($result2);
                               </thead>
                               <tbody>
                                   <?php $total_rows = 1; while($row2 = mysqli_fetch_assoc($result2)){
-                                    
+
                                     if ($row2['billid'] !=""){
                                      $param1 = 'https://billplz-staging.herokuapp.com/bills/' . $row2['billid'];
                                      $param2 = 'btn btn-success btn-sm';
@@ -69,7 +71,7 @@ $p=mysqli_num_rows($result2);
                                       <td><center>
 
                                         <a  class = "btn btn-primary btn-sm" href="order.php?id=<?=$row2['transactionid'];?>" ><i class="glyphicon glyphicon-eye-open"></i></a>
-                                        <a  class = "<?php echo $param2;?>" target="_blank" href="<?php echo $param1;?>" ><i class="glyphicon glyphicon-list-alt"> </i></a>
+                                        <a  class = "<?php echo $param2;?>" target="_blank" href="<?php echo $param1;?>" ><i class="glyphicon glyphicon-usd"> </i></a>
                                         <a  class = "btn btn-danger btn-sm" href="del.php?id=<?=$row2['transactionid'];?>" ><i class="glyphicon glyphicon-trash"></i></a>
                                         <center>
                                         </td>
@@ -86,5 +88,6 @@ $p=mysqli_num_rows($result2);
             </div>
         </div>
     </div>
+
     <!-- /.footer -->
     <?php include "include/footer.php"; ?>

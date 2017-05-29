@@ -4,7 +4,7 @@ include '../include/db.php';
 
 $sql2 = "SELECT DISTINCT  corder.billid,corder.tmpayment, corder.transactionid,corder.ftotal,corder.status,details.num,details.name as name,status.statusID,status.statusName FROM corder
 join details on corder.user_id = details.num
-join status on corder.status = status.statusID  ";
+join status on corder.status = status.statusID  ORDER BY (tmpayment) DESC";
 
 $result2 = mysqli_query($connect,$sql2);
 $p=mysqli_num_rows($result2);

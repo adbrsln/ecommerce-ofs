@@ -1,7 +1,7 @@
 <?php  session_start();
  //error_reporting(0);
 include 'include/db.php';
-require 'billplz.php';
+
 $transid=session_id();
     if(isset($_SESSION['cart']) && isset($_SESSION['cnum'])){
         $totaldiscount = $_POST["totaldiscount"];

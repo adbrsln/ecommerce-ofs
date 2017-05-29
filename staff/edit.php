@@ -4,8 +4,8 @@ include '../include/db.php';
 $transid = $_GET["id"];
 if (isset($_GET["id"])) {
 
-   $query3="SELECT distinct corder.imglink as imglink,status.statusName as status, details.name as name,details.address as address , details.notel as notel FROM corder
-   join details on corder.user_id = details.num join status on corder.status = status.statusID WHERE corder.transactionid = '$transid'"; //index details
+  $query3="SELECT distinct corder.imglink as imglink,status.statusName as status, details.name as name,details.address as address , details.notel as notel,pos.posid as posid FROM corder
+  join details on corder.user_id = details.num join status on corder.status = status.statusID left join pos on pos.transid = corder.transactionid WHERE corder.transactionid = '$transid'"; //index details
 	$result3 =mysqli_query($connect,$query3);
 	$count = mysqli_num_rows($result3);
 
@@ -40,7 +40,7 @@ if (isset($_GET["id"])) {
                 $paramstatus ="btn btn-primary disabled";
                 $paramstatus2 ="btn btn-success ";
                 $paramstatus3 ="btn btn-danger  ";
-                $paramstatus4 ="btn btn-warning disabled ";
+                $paramstatus4 ="btn btn-warning ";
             }else {
                  $paramstatus ="btn btn-primary disabled";
                 $paramstatus2 ="btn btn-success disabled";
@@ -81,6 +81,7 @@ if (isset($_GET["id"])) {
                         <tr>
 
                             <?php while($row2 = mysqli_fetch_assoc($result3)){
+                              $trackingNo =$row2['posid'];
                             ?>
                             <td class = "col-md-6">
                             <Strong>Customer Order Information</Strong></br></br>
@@ -97,7 +98,7 @@ if (isset($_GET["id"])) {
 
                                 </td>
                                 <td class = "col-md-2" colspan="1">
-                                <button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#myModal">Proof Of Payment</button>
+                                <button type="button" class="btn btn-info btn-block btn-sm" data-toggle="modal" data-target="#myModal">Proof Of Payment</button>
                                 </td>
 
                                 <?php  }  ?>
@@ -137,16 +138,17 @@ if (isset($_GET["id"])) {
                     </table>
 
                 <hr>
+                
                 <div class="pull-right">
-                    <a   class = "<?php echo $paramstatus;?>"  href="status.php?id=<?=$transid;?>&type=Approve">Approve Order</a>
-                    <a   class = "<?php echo $paramstatus4;?>"  href="status.php?id=<?=$transid;?>&type=deliver">Deliver Order</a>
-                    <a   class = "<?php echo $paramstatus2;?>"  href="status.php?id=<?=$transid;?>&type=complete">Complete Order</a>
-                    <a  onclick = "return del();" class = "<?php echo $paramstatus3;?>" href="status.php?id=<?=$transid;?>&type=cancel" >Cancel Order</a>
+                    <a   class = "<?php echo $paramstatus;?> btn-sm"  href="status.php?id=<?=$transid;?>&type=Approve">Approve Order</a>
+                    <a type="button" class="<?php echo $paramstatus4;?> btn-sm" data-toggle="modal" data-whatever="<?=$transid;?>" data-target="#myModal2">Deliver Order</a>
+                    <a   class = "<?php echo $paramstatus2;?> btn-sm"  href="status.php?id=<?=$transid;?>&type=complete">Complete Order</a>
+                    <a  onclick = "return del();" class = "<?php echo $paramstatus3;?>btn-sm" href="status.php?id=<?=$transid;?>&type=cancel" >Cancel Order</a>
                 </div>
                  </form>
                 </div>
         </div>
-         <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal fade" id="myModal" role="dialog">
                         <div class="modal-dialog">
 
                           <!-- Modal content-->
@@ -171,6 +173,78 @@ if (isset($_GET["id"])) {
 
                         </div>
                       </div>
+        <div class="modal fade" id="myModal2" role="dialog">
+                              <div class="modal-dialog modal-lg">
+
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                  <div class="modal-header ">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">New Item</h4>
+                                  </div>
+                                  <div class="modal-body">
+
+                                        <form method="POST" action = "status.php">
+                                            <p>Parcel No.</p>
+                                             <input type="text" class="form-control" name="posid" value = "<?=$trackingNo?>" required>
+                                               </br>
+                                               <input type="hidden" name = "id" value = "<?=$transid?>">
+                                              <input type="hidden" name = "type2" value ="deliver">
+                                              <?php
+                                                  //$trackingNo = "EN824328835MY"; # your tracking number
+                                                  $url = "http://localhost/shop/include/poslaju-api.php?trackingNo=".$trackingNo; # the full URL to the API
+                                                  $getdata = file_get_contents($url); # use files_get_contents() to fetch the data, but you can also use cURL, or javascript/jquery json
+                                                  $parsed = json_decode($getdata,true); # decode the json into array. set true to return array instead of object
+
+                                                  $httpcode = $parsed["http_code"];
+                                                  $message = $parsed["message"];
+
+
+
+                                                  if($message == "Record Found" && $httpcode == 200)
+                                                  {
+                                                    ?>
+                                                  <table class="table table-striped table-condensed ">
+                                                      <thead>
+                                                          <tr>
+                                                            <th>Date/Time</th>
+                                                            <th>Process</th>
+                                                            <th>Location</th>
+                                                          </tr>
+                                                      </thead>
+                                                      <tbody>
+                                                        <?php
+
+                                                          # iterate through the array
+                                                          for($i=0;$i<count($parsed['data']);$i++)
+                                                          {
+                                                            # access each items in the JSON
+                                                            echo "
+                                                              <tr>
+                                                                <td>".$parsed['data'][$i]['date_time']."</td>
+                                                                <td>".$parsed['data'][$i]['process']."</td>
+                                                                <td>".$parsed['data'][$i]['event']."</td>
+                                                              </tr>
+                                                              ";
+                                                          }
+                                                    }else {
+                                                      echo $message . "<br>";
+                                                      # code...
+                                                    }
+                                                    ?>
+
+                                                      </tbody>
+                                                  </table>
+                                      </div>
+                                  <div class="modal-footer">
+                                    <input type="submit" class="btn btn-primary btn-sm" value ="Submit" id="submit">
+                                      <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Close</button>
+                                      </form>
+                                  </div>
+                                </div>
+
+                              </div>
+                            </div>
 </div>
     <!-- /.footer -->
     <?php include "include/footer.php"; ?>

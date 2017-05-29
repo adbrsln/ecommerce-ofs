@@ -18,13 +18,13 @@ include '../include/billplz-configuration.php';
     $a->setEmail($cemail);
     $a->setMobile($cnotel);
     $a->setDescription($caddress);
-    $a->setPassbackURL('http://localhost/shop/customer/order.php?s=t&id='.$transid, 'http://localhost/shop/customer/order.php?s=t&id='.$transid);
-    $a->setReference_1('Exam apa?');
-    $a->setReference_1_Label('Apa ini');
+    $a->setPassbackURL('http://localhost/shop/customer/order.php?&id='.$transid, 'http://localhost/shop/customer/order.php?&id='.$transid);
+    //$a->setReference_1('Exam apa?');
+    //$a->setReference_1_Label('Apa ini');
     //$a->setPassbackURL('http://localhost/shop/customer/order.php?s=t&id='.$transid);
     $a->setCollection($collection_id);
     $a->setDeliver('1'); //Email Notification
     $a->create_bill($api_key);
     header('Location: ' .$a->getURL());
-    
+
 ?>
