@@ -4,10 +4,11 @@ include '../include/db.php';
 
 $num_rec_per_page=10;
 $id = $_SESSION['cnum'];
-$sql2 = "SELECT DISTINCT corder.billid,corder.tmpayment, corder.transactionid,corder.ftotal,corder.status,details.num,details.name as name,status.statusID,status.statusName, pos.posid as posid
+$sql2 = "SELECT DISTINCT bill.billCode,corder.tmpayment, corder.transactionid,corder.ftotal,corder.status,details.num,details.name as name,status.statusID,status.statusName, pos.posid as posid
 FROM corder join details on corder.user_id = details.num
 join status on corder.status = status.statusID
 left join pos on corder.transactionid = pos.transid
+left join bill on corder.billid = bill.billNum
 WHERE details.num = 3 ORDER BY (tmpayment) DESC";
 $result2 = mysqli_query($connect,$sql2);
 $p=mysqli_num_rows($result2);
@@ -46,8 +47,8 @@ $p=mysqli_num_rows($result2);
                               <tbody>
                                   <?php $total_rows = 1; while($row2 = mysqli_fetch_assoc($result2)){
 
-                                    if ($row2['billid'] !=""){
-                                     $param1 = 'https://billplz-staging.herokuapp.com/bills/' . $row2['billid'];
+                                    if ($row2['billCode'] !=""){
+                                     $param1 = 'https://billplz-staging.herokuapp.com/bills/' . $row2['billCode'];
                                      $param2 = 'btn btn-success btn-sm';
                                    }else{
                                      $param1 = '#';

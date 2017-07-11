@@ -4,8 +4,11 @@ include '../include/db.php';
 $transid = $_GET["id"];
 if (isset($_GET["id"])) {
 
-  $query3="SELECT distinct corder.imglink as imglink,status.statusName as status, details.name as name,details.address as address , details.notel as notel,pos.posid as posid FROM corder
-  join details on corder.user_id = details.num join status on corder.status = status.statusID left join pos on pos.transid = corder.transactionid WHERE corder.transactionid = '$transid'"; //index details
+  $query3="SELECT distinct corder.imglink as imglink,status.statusName as status, details.name as name,details.address as address , details.notel as notel,pos.posid as posid,bill.billCode as bcode ,bill.qrimg as qrimg FROM corder
+     join details on corder.user_id = details.num join status on corder.status = status.statusID
+     left join pos on pos.transid = corder.transactionid
+     left join bill on bill.billNum = corder.billID
+     WHERE corder.transactionid = '$transid'"; //index details
 	$result3 =mysqli_query($connect,$query3);
 	$count = mysqli_num_rows($result3);
 
@@ -55,9 +58,10 @@ if (isset($_GET["id"])) {
 		}
 
 }
-
+$PNG_WEB_DIR = '../customer/temp/';
 ?>
   <!-- Header Content -->
+  
    <?php include "include/header.php"; ?>
     <!-- end header Content -->
 
@@ -80,15 +84,19 @@ if (isset($_GET["id"])) {
 
                         <tr>
 
-                            <?php while($row2 = mysqli_fetch_assoc($result3)){
+                             <?php while($row2 = mysqli_fetch_assoc($result3)){
                               $trackingNo =$row2['posid'];
+                              $img = $row2['imglink'];
+                              $filename = $row2['qrimg'];
+                              $billCode =$row2['bcode'];
                             ?>
                             <td class = "col-md-6">
                             <Strong>Customer Order Information</Strong></br></br>
-                                Status :   <Strong><?php echo $row2['status']; $img = $row2['imglink']; ?></Strong></br>
+                                Status :   <Strong><?php echo $row2['status'];  ?></Strong></br>
                                 Name :<?php echo $row2['name']; ?></br>
                                 Phone Number : <?php echo $row2['notel']; ?></br>
                                 Address : <?php echo $row2['address']; ?></br>
+                                <?php if($img != ''){ $param = '../customer/uploads/'.$img;}else $param =''; ?>
                                 </td></div>
 
                                 <td class = "col-md-2" colspan="">
@@ -98,7 +106,9 @@ if (isset($_GET["id"])) {
 
                                 </td>
                                 <td class = "col-md-2" colspan="1">
-                                <button type="button" class="btn btn-info btn-block btn-sm" data-toggle="modal" data-target="#myModal">Proof Of Payment</button>
+                                <center>  <Strong>Payment Receipt</Strong></br><a target="_blank" href="https://billplz-staging.herokuapp.com/bills/<?=$billCode?>">
+                                  <?php echo '<img src="'.$PNG_WEB_DIR.basename($filename).'" />';?></a></center>
+
                                 </td>
 
                                 <?php  }  ?>
