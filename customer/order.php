@@ -96,10 +96,14 @@ $PNG_WEB_DIR = 'temp/';
 
                         <tr>
 
-                            <?php while($row2 = mysqli_fetch_assoc($result3)){
+                            <?php 
+                            while($row2 = mysqli_fetch_assoc($result3)){
                               $trackingNo =$row2['posid'];
                               $img = $row2['imglink'];
-                              $filename = $row2['qrimg'];
+                              if ($row2['qrimg'] != NULL) 
+                               $filename = $row2['qrimg'];
+                              $filename = 'test.png';
+                             
                               $billCode =$row2['bcode'];
                             ?>
                             <td class = "col-md-6">
