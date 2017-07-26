@@ -25,6 +25,6 @@ include '../include/billplz-configuration.php';
     $a->setCollection($collection_id);
     $a->setDeliver('1'); //Email Notification
     $a->create_bill($api_key);
-    header('Location: ' .$a->getURL());
-
+    //header('Location: ' .$a->getURL());
+    redirect($a->getURL());
 ?>

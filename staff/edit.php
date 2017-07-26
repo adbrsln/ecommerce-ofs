@@ -1,4 +1,4 @@
- <?php
+<?php
 include 'include/check.php';
 include '../include/db.php';
 $transid = $_GET["id"];
@@ -87,7 +87,9 @@ $PNG_WEB_DIR = '../customer/temp/';
                              <?php while($row2 = mysqli_fetch_assoc($result3)){
                               $trackingNo =$row2['posid'];
                               $img = $row2['imglink'];
-                              $filename = $row2['qrimg'];
+                              if ($row2['qrimg'] != NULL) 
+                               $filename = $row2['qrimg'];
+                              else $filename = 'test.png';
                               $billCode =$row2['bcode'];
                             ?>
                             <td class = "col-md-6">

@@ -1,4 +1,3 @@
-
 <?php
 include 'include/check.php';
 include '../include/db.php';

@@ -57,7 +57,7 @@ $p=mysqli_num_rows($result2);
                                      <td>
                                        <center>
                                        <a  class = "btn btn-primary btn-sm" href="edit.php?id=<?=$row2['transactionid'];?>" >View</a>&nbsp;
-                                       <a  class = "btn btn-danger btn-sm" href="del.php?id=<?=$row2['transactionid'];?>" >Delete</a>
+                                       <a  class = "btn btn-danger btn-sm" href="del.php?id=<?=$row2['transactionid'];?>&t=o" >Delete</a>
                                        <center>
                                      </td>
                                    </tr>

@@ -1,6 +1,6 @@
-     <?php
-     include 'include/check.php';
-    include '../include/db.php';
+<?php
+include 'include/check.php';
+include '../include/db.php';
 
     $num = $_SESSION['cnum'];
     $sql = "SELECT * from details where num = '$num'";

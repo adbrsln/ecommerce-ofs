@@ -1,4 +1,4 @@
-   <?php
+<?php
 include 'include/check.php';
 include '../include/db.php';
 
@@ -9,7 +9,7 @@ FROM corder join details on corder.user_id = details.num
 join status on corder.status = status.statusID
 left join pos on corder.transactionid = pos.transid
 left join bill on corder.billid = bill.billNum
-WHERE details.num = 3 ORDER BY (tmpayment) DESC";
+WHERE details.num = $id ORDER BY (tmpayment) DESC";
 $result2 = mysqli_query($connect,$sql2);
 $p=mysqli_num_rows($result2);
 

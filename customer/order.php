@@ -1,4 +1,4 @@
- <?php
+<?php
 include 'include/check.php';
 include '../include/db.php';
 $transid = $_GET["id"];
@@ -102,7 +102,7 @@ $PNG_WEB_DIR = 'temp/';
                               $img = $row2['imglink'];
                               if ($row2['qrimg'] != NULL) 
                                $filename = $row2['qrimg'];
-                              $filename = 'test.png';
+                              else $filename = 'test.png';
                              
                               $billCode =$row2['bcode'];
                             ?>

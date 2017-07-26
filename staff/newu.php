@@ -1,5 +1,4 @@
-  <!-- Header Content -->
-   <?php 
+<?php 
 include 'include/check.php';
 include "include/header.php"; ?>
     <!-- end header Content -->
